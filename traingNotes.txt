@@ -1,0 +1,1093 @@
+Written by Anonymous
+
+Microsoft Azure Developer Associate (Az-204) ::
+
+1. Developing Compute Solutions -- VM, Web Apps, Functions
+
+2. Developing azure Storage -- Storage Accounts + Cosmos DB
+
+3. Implement Azure Security -- Authorization + Authentication
+
+4. Monitor + Troubleshoot
+
+5. Connect to third-party apps (Azure service bus + azure event grid)
+
+
+https://learn.microsoft.com/en-us/credentials/certifications/azure-developer/?practice-assessment-type=certification
+
+
+
+================================================================================================================
+
+
+AWS -- Cloud Computing (Public, Private)
+
+
+AZ-900 (Microsoft Azure Funamentals)
+
+
+
+AZ-104   (Azure Administrator associate)  -- System Admin  
+
+Backup, Config (VM -- ssh/rdp to look out for issues)
+
+
+AZ-204   (Azure developer associate)  -- Developer 
+
+(Code + Azure services + deploy code )
+
+
+=========================================================================================================
+
+
+What is Cloud ?
+
+Infra -- Compute (vcpu + RAM) ,  Storage (Disk) , Networking , Database 
+
+Cloud computing -- deliver of computing services over internet  
+
+CSP -- cloud service provider
+
+AWS, Azure, GCP 
+
+ISP -- Airtel, Jio, BSNL
+
+
+Why do we need Cloud computing ?
+
+
+Tradition datacenter (On-premises)
+
+-- High Upfront cost (Infra (property) , hire employees, purchase all servers -- Cap Ex 
+
+- Monnthly expense if not using ( traffic is minimum)   --- Op Ex 
+
+- difficult to scale/scaling   ---   
+
+ (raise a ticket, approval -- buy server, install servers -- weeks to months)
+
+-- maintenance
+
+
+Cloud Computing Benefits :
+
+
+-- Pay-as-you-go   (Pricing -- On-demand, Reserved Instances  - 1y or 3y (50%)  , Spot Instances  (80-85% cheap)  )
+
+Electricity -- 1000 units per months -- 10k per month
+
+vacation -- 15 day (15 days -- 500 units -- 5k that month)
+
+
+-- No maintenance (done by CSP (aws,azure,gcp))
+
+-- Scaling  ( Vertical scaling ---  scale up/down, Horizontal scaling  -- scale out/in )
+
+traffic high  -- scale out , traffic low -- scale in 
+
+
+--  HA and DR 
+
+ (High Availability  +  disaster recovery)
+
+
+AWS or Azure -- 
+
+lot of regions around the globe 
+
+
+
+
+Central drive --- documents (policies, rules, tools)  -- URL
+
+Access the URL  --  authentication + authorization 
+
+page  -- employee id  + pswd  (MFA) -- codes 
+
+how much access this emplyee 
+
+HR - group -- policies 
+
+Dev team
+
+Prod team 
+
+
+
+AWS/Azure Cloud  --
+
+Cloud Service models 
+
+Trade off  -- Control with ease-of-usage
+
+IaaS  -- System Admins  -- VM, Load Balncers
+
+
+PaaS  -- Developers -- Azure Web Apps, Azure SQL, Azure Cosmos DB
+
+
+SaaS   -- Azure Functions
+
+
+
+
+Pricing Calculator , TCO (total Cost of ownership)  -- Migrate all workload from on-prem to cloud
+
+========================================================================================================
+
+
+AWS  -- 2006 (easy to use interface, 200+ services)  --- Free tier + paid 
+
+Azure --  free trail in actual sense -- 200 USD for 30 days ( upgrade to pay-as-you-go)
+
+               you will get a notification -- out of credis - pls upgrade your plan 
+
+Azure marketplace  -- allows 3rd party vendors to host services 
+
+Azure platform 
+
+============================================================================================================
+
+
+Please Create Azure Free Tier Account
+
+At 11:40 short break and Back by 12 pm 
+
+=============================================================================================================
+
+Credit/Debit card -- 
+
+one time free trial credits
+
+msg -- you have already consumed
+
+================================================================================================================
+
+
+Task 1  -- Create a New Azure Free Tier Account 
+
+https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account
+
+Azure gives you 3 admin tools :
+
+1. Azure Portal
+
+2. Azure CLI
+
+3. Azure Powershell
+
+
+
+Set a budget 
+
+10,000
+
+50%  --- alert 1 - email id
+
+
+90% --- alert 2
+
+
+100%  --  alert 3
+
+-- Free tier or Pay-as-you-go
+
+Azure won't charge you create budget
+
+
+Delete resources after hands-on demo is over ..
+
+=========================================================================================================
+
+
+Azure Global Infrastructure :
+
+Regions  and Availability Zones
+
+
+-- Bangalore and Pune (India)  - two data centers --- e-commerce
+
+customers --  US , UK and India
+
+
+Gaming application -- latency matters
+
+Cloud -- Azure
+
+1. Region -- physical location around the world where we cluster data centers
+
+2. Azure has 60+ regions around the globe
+
+3. Better scalability and redundancy ..
+
+4. Preserve data residency :
+
+-- Low Latency
+-- High Availability 
+
+5. How to choose a region ?
+
+-- compliance, proximity, available services, pricing 
+
+
+Azure Region pairs
+
+-- Automatic Replication and Failover for azure services 
+
+whenever an azure outage occurs, region pair  - two regions
+
+one region fails to power
+
+other region will take over -- failover
+
+
+Planned azure updates happens to one region at a time in region pairs
+
+============================================================================================================
+
+Availability Zones :
+
+VM -- dev n test (single zone)
+
+app - Vm -- prod team -- business critical (2 zones)
+
+Trade off between cost n HA  
+
+
+
+-- Region represents a sepaarte geo area (east us)
+
+-- AZ is a set of data centers
+
+-- AZ is used for HA (one datacenter not working, other DC can achieve)
+
+-- Multiple Zones can be selected for HA
+
+-- Each AZ has independent power, cooling and networking
+
+-- these AZs are connected via high bandwidth and ultra low latency networking
+
+-- Azs are physically sepated by 100km
+
+============================================================================================================
+
+Subscriptions  --
+
+
+1 account can have many subscriptions
+
+3 subscriptions  -- each syb. will generate a separate invoice
+
+dev team  -- cost 
+
+qa team
+
+prod team 
+
+you can pay them using single card/billing methods 
+
+
+
+Resource Groups  --
+
+
+-- isolated logical containers in which a user can create resources like VM, webapps, sbs etc
+
+-- let's say subscription 
+   sub 1 --- 2 Vm, 1 db
+
+   sub 2 --  1 AI resource
+
+different invoices per subscription .....
+
+
+===============================================================================================================
+
+
+Task 2 -- Create 1 VM with linux 
+
+-- OS -- ubuntu 24.04
+
+-- Size -- B1ms
+
+-- Location -- East US 2  (zone 3)
+
+-- Authentication  
+
+SSH key  -- create new key 
+
+
+Once VM is ready, then will SSH to access the machine 
+
+
+Task 3 -- SSH into Linux VM :
+
+Use command  like this in your cmd:
+
+ssh -i <private-key-pair-path>  username@public-ip
+
+ssh -i ajitkey111.pem ajitadmin@20.49.53.149
+
+
+once ssh successfully done :
+
+use :   whoami
+           cat /etc/os-release
+
+=====================================================================================================================
+
+windows  --- product page and will download button
+
+windows update 
+
+linux -- CLI 
+
+ubuntu, redhat, centos
+
+Ubuntu -- apt (package manager)
+
+>> sudo apt update   (update all packages)
+
+>> sudo apt install apache2
+
+=====================================================================================================================
+
+
+Developing application --  .NET, PHP, Java, Python 
+
+Deploy these application on Azure Compute solutions
+
+1. VMs -- IaaS
+
+2. WebApp -- PaaS
+
+3. Functions - SaaS 
+
+
+.NET application
+
+.NET 8.0 SDK + VS Code (Installed on system)
+
+
+
+Test these applications locally -- localhost  (On-prem)
+
+
+
+Task 4 :  Deploy a sample .NET Application locally ..
+
+1. ASP.NET Core 8
+
+2. VS Code 
+
+3. PHP 
+
+
+Deploy the same project on Windows Vm in Azure -- Web Server + code 
+
+
+
+LAB 5 -- Running a simple ASP.NET application locally ..
+
+        (C# Dev Kit Extension Installed in VS Code)
+		
+	       1. Open VS Code
+		
+		2. Create a new folder(Az-204) and open it
+		
+		3. In Search, Click on 'Show and Run Commands' >> '.NET - New Project' >> 
+		   'ASP.NET Core WebApp (Razor Pages)' >> 'WebApp1' >> Run in Default Directory
+		   
+		4. It will create a simple .NET template application.
+		
+		5. You will see project files under WebApp1 directory
+		
+		6. Open 'Solutions Explorer' >> 'WebApp1' >> Debug - Start as New Instance 
+		
+		7. It will build the code and run it in localhost
+		
+		8. You will see the output with page redirected to browser..
+
+
+
+I want to sahre this web page with 100s of customers on internet 
+
+Computing Infra --- VM -- deploy the same project on a VM
+
+
+LAB 6 -- Deploying an Azure Windows VM
+
+		1. Look for 'Virtual Machines' resource.
+		
+		2. Click on 'Create VM'
+		
+		3. Under Basics -- 
+		
+		  Project Details :
+		
+		    Subscription -- 'Your-Subscription-Name'
+			
+			Resource Group -- 'Your-RG-Name' (If not exists, create a New RG)
+			
+		  Instance Details :
+		    
+			VM Name -- demo-windows
+			
+			Region -- East US 2
+			
+			Availability Options -- No Infra Redundancy Required
+			
+			Image -- Windows Server 2025 Datacenter - x64 Gen 2
+			
+			Size -- Standard_B2s (2 vCPU + 4 GB RAM)
+			
+			Authentication -- Username and Password (Note down fo later use)
+			
+			(Rest option in 'Basics' keep as default)
+			
+			
+	    4. Under Disks --
+		
+		    OS Disk Size -- Image Default (127 GB)
+			
+			OS Disk Type -- Premium SSD
+			
+			(Rest Options keep as default)
+			
+	    5. Under Networking --
+		
+		  Network Interface :
+		  
+		    It will create a new Virtual Network, a new Subnet and a new Public-IP
+			
+			If you don't see public-ip, then click on create new
+			
+			(Rest options keep as default)
+			
+		
+		6. Skip to 'Review + Create and' Click on it.
+		
+		7. First it will validate the config. and will create a VM along with other resources
+		   such as Ntwork, Disk, Public-Ip, Network interface, Security Group etc.
+		   
+		
+		
+
+Linux  -- SSH (22) to connect 
+
+Windows -- RDP (3389) to connect
+
+
+LAB 7 -- Connecting to Azure Windows VM 
+
+		1. Once deployment is successful, click on 'Go to Resource'
+		
+		2. It will take you to VM 'demo-window' where you will find all detaild info about VM.
+		
+		3. Click on Connect.
+		
+		4. Download RDP file and also VM access for 3389 Port.
+		
+		5. Open the downloaded RDP file, click on 'connect' and enter password you mentioned while creating VM.
+		
+		6. It will open remote VM (Windows) Interface ..
+		
+
+LAB 8 -- Troubleshooting RDP Connections
+
+     (https://learn.microsoft.com/en-us/troubleshoot/azure/virtual-machines/windows/troubleshoot-rdp-connection)
+
+
+Windows VM  -- Web Server to Host Web Pages + Hosting Bundle for ASP.NET  + Runnable version of Code
+
+-- Web Server -- IIS (internet Information Services)
+
+-- Hosting Bundle for ASP.NET
+
+-- Runnable version of Code
+
+
+LAB 9 -- Installing IIS Server on Windows VM
+
+                1. Inside your remote VM, go to 'Server Manager'
+		
+		2. Click on 'Add Roles and Features'
+		
+		3. Under Server Roles -- select 'Web Server(IIS)'
+		
+		4. Click on 'Add features' >> Next >> Install ..
+		
+		5. It might take 2-3 minutes to install the IIS web-server on window VM.
+		
+		6. Once installation complete, you can check 'localhost; inside remote VM browser.
+		
+		7. It should display the homepage of IIS web-server.
+		
+		8. To access it outside the remote VM, from host machine - use public-ip of VM
+		
+		9. We need to allow port 80 in security group of VM.
+		
+		10. Go to Network settings inside VM >> Add a inbound rule to allow port 80 access
+		
+		11. Now you should be able to access the web-server homepage from host machine using public-ip.
+
+
+
+LAB 10 -- Publish our application code to Windows VM 
+
+		Install ASP.NET Hosting Bundle on Windows VM :
+		
+		1. Go Inside the Window VM -- Download ASP.NET Hosting Bundle -- Install .
+		
+		2. Go to Windows Explorer (inside Windows VM)
+		
+		3. Create a new folder -- 'webapp1'
+		
+		4. We Will copy our locally build project files (runnable files) to this folder later on..
+		
+		5. Now go to Server Manager >> Tools >> IIS Manager
+		
+		6. Click on demo-windows >> Sites >> Default website >> Bindings -- change port to 8080
+		
+		7. In last step, we have changed the port of default website(homepage) to 8080
+		
+		8. Now we will add a new website which will listn on port 80 
+		
+		9. Right Click on Sites >> Add Website :
+		
+		   Site name -- webapp1
+		   
+		   Physical Path -- C:\webapp1
+		
+		   (rest option keep default)
+		   
+		   click on OK.
+		      
+		10. Now i have two websites on this web-server on port 80 and 8080.
+		
+		11. Please disconnect to RDP connection of Windows VM.
+		
+		12. Back to host machine -- VS Code -- build the runnable version of application.
+		
+		13. Open a new terminal and use commands :
+		
+		   >> cd WebApplication1
+		   
+		   >> dotnet publih -c Release -o ./bin/Publish
+		   
+		14. It will create a runnable version of application in Publish folder under bin directory.
+		
+		15. Now copy the content of 'Publish' folder from host machine to 'webapp1' folder in remote VM
+		
+		16. Now check the public-ip of window VM and application is hosted succesfully on VM.
+
+
+
+=====================================================================================================================
+
+
+Github Repo Link -- https://github.com/ajit010/AZ-204-DEC.git
+
+=====================================================================================================================
+
+
+LAB 11 -- Deploying an Azure Linux VM
+
+		1. Look for 'Virtual Machines' resource.
+		
+		2. Click on 'Create VM'
+		
+		3. Under Basics -- 
+		
+		  Project Details :
+		
+		    Subscription -- 'Your-Subscription-Name'
+			
+			Resource Group -- 'Your-RG-Name' (If not exists, create a New RG)
+			
+		  Instance Details :
+		    
+			VM Name -- demo-linux
+			
+			Region -- East US 2
+			
+			Availability Options -- No Infra Redundancy Required
+			
+			Image -- Ubuntu 24.04 - x64 Gen 2
+			
+			Size -- Standard_B1s (1 vCPU + 1 GB RAM) or Standard_B1ms (1 vCPU + 2 GB RAM)
+			
+			Authentication -- SSH Key (Create a new key)
+			
+			(Rest option in 'Basics' keep as default)
+			
+			
+	    4. Under Disks --
+		
+		    OS Disk Size -- Image Default (30 GB)
+			
+			OS Disk Type -- Premium SSD
+			
+			(Rest Options keep as default)
+			
+	    5. Under Networking --
+		
+		  Network Interface :
+		  
+		    It will create a new Virtual Network, a new Subnet and a new Public-IP
+			
+			If you don't see public-ip, then click on create new
+			
+			(Rest options keep as default)
+			
+		
+		6. Skip to 'Review + Create and' Click on it.
+		
+		7. First it will validate the config. and will create a VM along with other resources
+		   such as Ntwork, Disk, Public-Ip, Network interface, Security Group etc.
+		   
+		   
+		   
+LAB 12 -- Connecting to Azure Linux VM
+		
+		1. Once deployment is successful, click on 'Go to Resource'
+		
+		2. It will take you to VM 'demo-window' where you will find all detaild info about VM.
+		
+		3. Click on Connect.
+		
+		4. Look for SSH command and also check VM access for 22 Port.
+		
+		5. Open the downnloads folder in cmd and use this command :
+		
+		    ssh -i <private-key-pair> username@<public-ip>
+		
+		6. Now you will be logged into remote VM (linux) sucessfully.
+		
+		7. You can use commands like 'whoami; and 'cat /etc/os-release'
+		
+
+LAB 13 -- Deploying a Web-Server on Azure Linux VM :
+
+		1. In your SSH terminal of remote VM, use commands :
+		
+		  >> sudo apt update
+
+		  >> sudo apt install apache2 -y
+		 
+		  >> sudo systemctl status apache2
+		  
+		  
+		2. Now add security rule of adding port no. 80 to listen requests
+		   
+		   Demo-Linux VM >> Network settings >> Add Inbound Rule
+		   
+		3. Check public-ip of VM and you will get homepage of Apache server
+		
+		4. It confirms web-server has been installed ..
+
+
+
+LAB 14 -- Deploying PHP Application onto Linux Web Server
+
+
+		1. PHP application code you can get from github repo.
+		
+		2. Extract the zip file and open folder in VS Code.
+		
+		3. It has index.php file which has html and php code.
+		
+		4. Similar like we installed ASP Hosting Bundle on Windows VM, we need to php moduls in linux VM.
+		
+		5. The required PHP Modules helps to interact with Apache Web Server.
+		
+		6. Use commands in SSH terminal of Linux VM :
+		
+		 >> sudo apt update 
+		 
+		 >> sudo apt install php libapache2-mod-php
+		 
+		 >> cd /var/www/html
+		 
+		 
+		(Now we need to copy our php application files into this location from our local machine)
+		
+		7. Use one more command to open permission in this folder to allow adding new files
+
+                 >> sudo chmod 777 /var/www/html/
+		
+		 >> sudo chmod -R 755 /var/www/html/
+
+
+		 
+		8. Now access the public-ip/Index.php to get output ..
+
+
+=====================================================================================================================
+
+
+         mv php-application.zip /var/www/html
+   35  cd ..
+   36  ls
+   37  rm -rf AZ-204-DEC/
+   38  ls
+   39  unzip php-application.zip
+   40  sudo apt install unzip
+   41  clear
+   42  ls
+   44  unzip php-application.zip
+   45  clear
+   46  ls
+   47  rm -rf __MACOSX/
+   48  rm -rf php-application.zip
+   49  ls
+   51  cd application/
+   52  ls
+   53  mv Index.php /var/www/html
+   54  mv lib /var/www/html
+   55  clear
+   56  ls
+   57  cd ..
+   58  ls
+   59  rm -rf application/
+   60  clear
+   61  ls
+   62  sudo chmod -R 755 /var/www/html/
+   63  ls
+   64  history
+
+
+===============================================================================================================
+
+
+Azure WebApps :
+
+
+1. Managed Service . Here the VMs and Infra is manged for you ..
+
+2. Support for .NET, Python,Java, PhP etc.
+
+3. You won;t have access to SSH n RDP on servers.
+
+4. Auto Scaling and HA
+
+
+If you have a web application has runtime -- VMs 
+
+VM -- Cost size of b1s, b2s
+
+APP Service Plan -- Basic, Remium Standard
+
+
+WEB app  + ASP (app sevice plan)
+
+web app deployed -- URL
+
+IIS web server + .NET (Hosting bundle)  -- code
+
+
+
+
+LAB 15 -- Create an Azure WebApp
+
+		1. Click on 'Create a Resource' >> 'WebApp'.
+		
+		2. Under Basics --
+		
+		  Project Details :
+		
+		    Subscription -- 'Your-Subscription-Name'
+			
+			Resource Group -- 'Your-RG-Name' (If not exists, create a New RG)
+			
+		  Instance Details :
+		    
+			Name -- demowebapp434 (it has to be globally unique)
+			
+		    Publish -- Code
+			
+			Runtime Stack -- .NET 8.0 (LTS)
+			
+			OS - Windows
+			
+			Region -- Australia Central
+			
+			Pricing Plans -- Basic B1 or Free F1
+			
+		3. Keep other options as defaultand skip to 'Review and Create'
+		
+		4. It will deploy an azure webapp.
+		
+		5. Now 2 resources have been created.. Azure WebApp and Azure App Service Plan.
+		
+		6. Azure Webapp will give you a DNS address(or URL).
+		
+		7. Go to that URL and you will see the default webpage of WebApp.
+		
+
+
+LAB 16 -- Publish from VS Code to Azure WebApp
+
+		1. Now we will deploy our sample .NET application to azure webapp
+		
+		2. First you nee to build code to a publish folder, if not done earlier.. follow these steps :
+		
+		3. Open a new terminal in VS Code and use commands :
+		
+		   >> cd WebApplication1
+		   
+		   >> dotnet publih -c Release -o ./bin/Publish
+		   
+		4. It will create a runnable version of application in Publish folder under bin directory.
+		
+		5. Now you need to install 'Azure App Service' extension in VS Code.
+		
+		6. Right Click on Publish folder >> Deploy to WebApp
+		
+		7. Sign in to Azure to authenticate
+		
+		8. Select your azure webapp (demowebapp434) to deploy.
+		
+		9. Once deployed, check URL and it will reflect the output of sample application of .NET 
+		
+		10. That's how we publish code directly from VS Code to Azure WebApp.
+
+
+
+LAB 17 -- Use an application for SQL dB and DB-server 
+
+LAB 17 -- Create an Azure SQL DB and DB-Server
+
+		1. Click on 'Create a new Resource' >> 'SQL Database' >> Create
+		
+		2. Under Basics --
+		
+		  Project Details :
+		
+		    Subscription -- 'Your-Subscription-Name'
+			
+			Resource Group -- 'Your-RG-Name' (If not exists, create a New RG)
+			
+		  Database Details :
+		    
+			Name -- appdb
+			
+			Server -- If Not Created Earlier, Click on Create New.
+			
+			Server Configuration :
+			
+			  Name -- appserver758 (globally unique)
+			  
+			  Location -- East US
+			  
+			  Authentication -- Choose SQL Authentication -- Add username and pswd (note down for later use)
+			  
+			  Click on OK and Database Server Ready. 
+			  
+			Workload Env -- Development
+			
+			Compute + Storage -- Provisioned + Basic (Cost - 4.9 USD per month)
+			
+			Backup Storae Redundancy - LRS (Locally Redundant)
+			
+			
+		3. Under Networking --
+		
+		  Network Connectivity :
+		  
+		    Connectivity Method -- Public Endpoint
+		  
+		  Firewall Rules :
+			  
+			Enable both Rules .
+
+		4. Keep Other Options as Default and skip to 'Review and Create'.
+		
+		5. It will create two resources -- DB and DB-Server.
+		
+		
+
+LAB 18 -- Populating our Database with data
+			
+		1. Once deployment is completed, click on 'Go to Resource'.
+		
+		2. It will take yo to DB and login to DB-Server using Credential.
+		
+		3. Click on Query Editor and add some data.
+		
+CREATE TABLE Course
+(
+   CourseID int,   
+   CourseName varchar(1000),
+   Rating numeric(2,1)
+);
+
+INSERT INTO Course(CourseID,CourseName,Rating) VALUES(1, 'Docker and Kubernetes',4.5);
+
+INSERT INTO Course(CourseID,CourseName,Rating) VALUES(2,'AZ-204 Azure Developer',4.6);
+
+INSERT INTO Course(CourseID,CourseName,Rating) VALUES(3,'AZ-104 Administrator',4.7);
+
+SELECT * FROM Course;
+
+
+        4. It will add three rows in database.
+		
+
+
+
+LAB 19 + 20 -- Build an application to Connect to SQL DB (cloud) (localhost), Publish this application on Azure WebApp, Use Azure WebApp Connection String
+
+
+     1.  Use this github repo -- https://github.com/ajit010/AZ-204-DEC
+
+     2. Download application-for-sql-db.zip file and extrct it and open in a folder in VS Code.
+
+     3. Now Use connection string from db-server to replace in appsttings.json in project files.
+
+     4. Try to debug -- start as a new instance -- it will show you output of a table data stored in database
+
+     5. Now publish the code to Publish folder using commands used earlier :
+      
+ 	>> cd learningapp
+
+	>> dotnet publish -c Release -o ./bin/Publish
+
+     6. Right Click on Publish folder -- Deploy to webapp
+
+     7. Once it is done successfully, you can remove connection string from local code, again publish code n deploy
+
+     8. This time add connection string in Env Variables in Azure WebApp
+
+          Name -- AZURE_SQL_CONNECTIONSTRING
+
+          Value  --- <<Connection string value>>
+
+	  Type  --  SQLAzure
+
+
+     9.  Save and Apply the changes.
+
+     10. Now check again the URL of webapp and it will display the output.
+
+
+Env Variables in Azure webapp  - topmost priority  -- overrides appsettings.json 
+
+
+
+LAB 21 -- 
+
+
+Basic B1 plan  -- 3 instances  -- each ( 1vcpu + 1.75 GB RAM)  - 7.82 rs per hr
+
+
+Azure web app  -- 1 instance ( 1vcpu and 1GB RAM)
+
+3 azure web apps 
+
+
+e-commerce webapp -- traffic - increase -weekend - scale out
+
+basic -- 3
+
+standard -- 10
+
+
+application -- v1  to v2 
+
+webapp -- azure webapp -- version 1
+
+deployment slot --- config replicated to temp version 2 -- 
+
+swap option --
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
